@@ -85,3 +85,29 @@ function parse_git_dirty {
 
 export PS1="\[\e[92m\]\u\[\e[m\]@\[\e[92m\]\h\[\e[m\]:\[\e[94m\]\w\[\e[m\]\[\e[96m\]\`parse_git_branch\`\[\e[m\] $ "
 # root export PS1="\[\e[91m\]\u\[\e[m\]@\[\e[91m\]\h\[\e[m\]:\[\e[94m\]\w\[\e[m\]\[\e[96m\]\`parse_git_branch\`\[\e[m\] $
+eval "$(dircolors -p | sed 's/ 4[0-9];/ 01;/; s/;4[0-9];/;01;/g; s/;4[0-9] /;01 /' | dircolors /dev/stdin)"
+bind '"\C-H":backward-kill-word'
+bind '"\e[3;5~":kill-word'
+######################## ssh
+env=~/.ssh/agent.env
+
+agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
+
+agent_start () {
+    (umask 077; ssh-agent >| "$env")
+    . "$env" >| /dev/null ; }
+
+agent_load_env
+
+# agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2= agent not running
+agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
+
+if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
+    agent_start
+    ssh-add
+elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
+    ssh-add
+fi
+
+unset env
+#################################
