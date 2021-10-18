@@ -161,7 +161,9 @@ alias x='hexyl'
 alias cat='bat -P'
 alias tree='ll -T'
 alias open='xdg-open'
-alias subl='/mnt/c/Program Files/Sublime Text/subl.exe'
+alias subl='/mnt/c/Program\ Files/Sublime\ Text\ 3/subl.exe'
+alias lua='luajit'
+alias xmlp='xmllint --format -'
 
 #eval "$(dircolors -p | sed 's/ 4[0-9];/ 01;/; s/;4[0-9];/;01;/g; s/;4[0-9] /;01 /' | dircolors /dev/stdin)"
 bind '"\C-H":backward-kill-word'
@@ -202,6 +204,8 @@ export HISTTIMEFORMAT=$(echo -e "\033[0;36m[%F %T]\033[0m ")
 
 # Highlight section titles in manual pages.
 export LESS_TERMCAP_md="${yellow}"
+export LUA_PATH='/home/nicolas/.local/share/lua/5.1/?.lua;;'
+export LUA_CPATH='/home/nicolas/.local/lib/lua/5.1/?.so;;'
 unset LS_COLORS
 cd ~
 eval "$(starship init bash)"
