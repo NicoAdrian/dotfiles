@@ -20,3 +20,5 @@ disabled = true
 format = "[$symbol$branch]($style) "
 [lua]
 disabled = true
+[golang]
+disabled = true
