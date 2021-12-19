@@ -159,6 +159,7 @@ alias clear='clear && clear'
 alias x='hexyl'
 alias tree='ll -T'
 alias xmlf='xmllint --format -'
+alias jsonf='fd -e json | xargs -I{} bash -c "cat {} | jq | sponge {}"'
 alias sensors='sudo powermetrics --samplers smc -i1 -n1'
 
 #eval "$(dircolors -p | sed 's/ 4[0-9];/ 01;/; s/;4[0-9];/;01;/g; s/;4[0-9] /;01 /' | dircolors /dev/stdin)"
